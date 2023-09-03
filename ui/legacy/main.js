@@ -36,13 +36,15 @@ tools.cicleCoordsToScuareCoords = function(x, y) {
   if ( termx2 < 0) { termx2 = 0}
   if ( termy1 < 0) { termy1 = 0}
   if ( termy2 < 0) { termy2 = 0}
-  u = 0.5 * Math.sqrt(termx1) - 0.5 * Math.sqrt(termx2);
-  v = 0.5 * Math.sqrt(termy1) - 0.5 * Math.sqrt(termy2);
+
+  let u = 0.5 * Math.sqrt(termx1) - 0.5 * Math.sqrt(termx2);
+  let v = 0.5 * Math.sqrt(termy1) - 0.5 * Math.sqrt(termy2);
   if ( u > 1) { u = 1}
   if ( u < -1) { u = -1}
+
   if ( v > 1) { v = 1}
   if ( v < -1) { v = -1}
-  return [u, v]
+  return [u, v];
 }
 
 
@@ -206,8 +208,7 @@ gamepad.axisToCSS = function(x,y, style) {
   }
   if (style === 'Square') {  
     // Transform to scuare
-    let u = tools.cicleCoordsToScuareCoords(x, y)[0];
-    let v = tools.cicleCoordsToScuareCoords(x, y)[1];
+    let [u, v] = tools.cicleCoordsToScuareCoords(x, y);
     
     // Transform to CSS
     u = ((u * 100)/2)+50;
@@ -216,8 +217,7 @@ gamepad.axisToCSS = function(x,y, style) {
   }
   if (style === 'PowerStick') {
     // Transform to scuare
-    let u = tools.cicleCoordsToScuareCoords(x, y)[0];
-    let v = tools.cicleCoordsToScuareCoords(x, y)[1];
+    let [u, v] = tools.cicleCoordsToScuareCoords(x, y);
     
     // Transform to CSS
     u = ((u * 100)/2)+50;
