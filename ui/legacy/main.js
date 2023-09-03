@@ -272,17 +272,33 @@ gamepad.joypadLoop = function() {
         element.style.top = tmpAxisToCSSValue[1] + "%";
       }      
       /* -- Stick 2 -- */
+      const joystickFeedback2Element = document.getElementById("joystickFeedback2");
       if (config.gamepadAxis34FeedbackStyle === 'Circle') {
-        document.getElementById("joystickFeedback2").style.left = gamepad.axisToCSS(axisValues[2], axisValues[3], 'Circle')[0] + "%";
-        document.getElementById("joystickFeedback2").style.top = gamepad.axisToCSS(axisValues[2], axisValues[3], 'Circle')[1] + "%";  
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[2],
+          axisValues[3],
+          'Circle'
+        );
+        joystickFeedback2Element.style.left = tmpAxisToCSSValue[0] + "%";
+        joystickFeedback2Element.style.top = tmpAxisToCSSValue[1] + "%";
       }
       if (config.gamepadAxis34FeedbackStyle === 'Square') {
-        document.getElementById("joystickFeedback2").style.left = gamepad.axisToCSS(axisValues[2], axisValues[3], 'Square')[0] + "%";
-        document.getElementById("joystickFeedback2").style.top = gamepad.axisToCSS(axisValues[2], axisValues[3], 'Square')[1] + "%";  
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[2],
+          axisValues[3],
+          'Square'
+        );
+        joystickFeedback2Element.style.left = tmpAxisToCSSValue[0] + "%";
+        joystickFeedback2Element.style.top = tmpAxisToCSSValue[1] + "%";
       }
       if (config.gamepadAxis34FeedbackStyle === 'PowerStick') {
-        document.getElementById("joystickFeedback2").style.left = gamepad.axisToCSS(axisValues[2], axisValues[3], 'PowerStick')[0] + "%";
-        document.getElementById("joystickFeedback2").style.top = gamepad.axisToCSS(axisValues[2], axisValues[3], 'PowerStick')[1] + "%";  
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[2],
+          axisValues[3],
+          'PowerStick'
+        );
+        joystickFeedback2Element.style.left = tmpAxisToCSSValue[0] + "%";
+        joystickFeedback2Element.style.top = tmpAxisToCSSValue[1] + "%";
       }
     }
   };
@@ -301,9 +317,10 @@ ui.btnInactiveColor = "rgb(41, 41, 61)";
 ui.btnDisableColor = "rgb(16, 14, 35)";
 
 ui.buttonAnimation = function(id) {
-  document.getElementById(id).style.backgroundColor = ui.btnActiveColor;
+  const element = document.getElementById(id);
+  element.style.backgroundColor = ui.btnActiveColor;
   setInterval(function(){
-    document.getElementById(id).style.backgroundColor = ui.btnInactiveColor;
+    element.style.backgroundColor = ui.btnInactiveColor;
   }, gamepad.buttonFadeTime);
 }; 
 
@@ -318,14 +335,16 @@ ui.lockBtns = function() {
   ui.areBtnsLocked = false;
 }
 
-document.getElementById("btnLockMenu").addEventListener("click", function() {
+const btnLockMenuElement = document.getElementById("btnLockMenu");
+
+btnLockMenuElement.addEventListener("click", function() {
   if (ui.areBtnsLocked  == false) {
     console.log("Buttons Loked");
-    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnActiveColor;
+    btnLockMenuElement.style.backgroundColor = ui.btnActiveColor;
     ui.unlockBtns();
   } else {
     console.log("Buttons Unlocked");
-    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnInactiveColor;
+    btnLockMenuElement.style.backgroundColor = ui.btnInactiveColor;
     ui.lockBtns();
   }
 });
@@ -363,13 +382,14 @@ ui.closeFullscreen = function() {
 
 document.getElementById("btnFullScreen").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
+    const btnFullScreenElement = document.getElementById("btnFullScreen");
     if (ui.fullscreen == false) {
       console.log("Open Fullscreen")
-      document.getElementById("btnFullScreen").style.backgroundColor = ui.btnActiveColor
+      btnFullScreenElement.style.backgroundColor = ui.btnActiveColor;
       ui.openFullscreen();
     } else {
       console.log("Close Fullscreen")
-      document.getElementById("btnFullScreen").style.backgroundColor = ui.btnInactiveColor
+      btnFullScreenElement.style.backgroundColor = ui.btnInactiveColor;
       ui.closeFullscreen();
     }
   }
