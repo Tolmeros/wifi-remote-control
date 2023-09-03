@@ -111,39 +111,48 @@ document.getElementById("btnJoystick").addEventListener("click", function() {
 
 gamepad.enabled = function() {
   document.getElementById("btnJoystick").style.backgroundColor = ui.btnActiveColor;
-  document.getElementById("joystick1").style.display = 'inherit';
-  document.getElementById("joystick2").style.display = 'inherit';
+
+  const joystick1Element = document.getElementById("joystick1");
+  const joystick2Element = document.getElementById("joystick2");
+
+  joystick1Element.style.display = 'inherit';
+  joystick2Element.style.display = 'inherit';
   gamepad.isEnabled = true;
 
   if (config.gamepadAxis12FeedbackStyle === 'Circle') {
-    document.getElementById("joystick1").style.borderRadius = "75px";
+    joystick1Element.style.borderRadius = "75px";
   }
   if (config.gamepadAxis12FeedbackStyle === 'Square') {
-    document.getElementById("joystick1").style.borderRadius = "8px";
+    joystick1Element.style.borderRadius = "8px";
   }
   if (config.gamepadAxis12FeedbackStyle === 'PowerStick') {
-    document.getElementById("joystick1").style.borderRadius = "8px";
-    document.getElementById("joystickFeedback1").style.left = "50%";
-    document.getElementById("joystickFeedback1").style.top = "100%";
+    joystick1Element.style.borderRadius = "8px";
+    const joystickFeedback1Element = document.getElementById("joystickFeedback1");
+    joystickFeedback1Element.style.left = "50%";
+    joystickFeedback1Element.style.top = "100%";
   }
 
   if (config.gamepadAxis34FeedbackStyle === 'Circle') {
-    document.getElementById("joystick2").style.borderRadius = "75px";
+    joystick2Element.style.borderRadius = "75px";
   }
   if (config.gamepadAxis34FeedbackStyle === 'Square') {
-    document.getElementById("joystick2").style.borderRadius = "8px";
+    joystick2Element.style.borderRadius = "8px";
   }
   if (config.gamepadAxis34FeedbackStyle === 'PowerStick') {
-    document.getElementById("joystick2").style.borderRadius = "8px";
-    document.getElementById("joystickFeedback2").style.left = "50%";
-    document.getElementById("joystickFeedback2").style.top = "100%";
+    joystick2Element.style.borderRadius = "8px";
+    const joystickFeedback2Element = document.getElementById("joystickFeedback2");
+    joystickFeedback2Element.style.left = "50%";
+    joystickFeedback2Element.style.top = "100%";
   }
 }
 
 gamepad.disable = function() {
+  const joystick1Element = document.getElementById("joystick1");
+  const joystick2Element = document.getElementById("joystick2");
+
   document.getElementById("btnJoystick").style.backgroundColor = ui.btnInactiveColor;
-  document.getElementById("joystick1").style.display = 'none';
-  document.getElementById("joystick2").style.display = 'none';
+  joystick1Element.style.display = 'none';
+  joystick2Element.style.display = 'none';
   gamepad.isEnabled = false;
 }
 
@@ -536,14 +545,16 @@ websocket.onmessage = function (e) {
     }
 
     if (data.hasOwnProperty("wifiSignalPercentual")){
+      const element = document.getElementById("panelSignal");
       if ( config.telemetryWifiSignalStyle == 'Percentual') {
-        document.getElementById("panelSignal").innerHTML = data['wifiSignalPercentual'] + '%';
+        element.innerHTML = data['wifiSignalPercentual'] + '%';
       } else {
-        document.getElementById("panelSignal").innerHTML = data['wifiSignalDbm'];
+        element.innerHTML = data['wifiSignalDbm'];
       }
     }
     if (data.hasOwnProperty("voltage")){
-      document.getElementById("panelVoltage").innerHTML = data['voltage'];
+      const element = document.getElementById("panelVoltage");
+      element.innerHTML = data['voltage'];
     }
 
     if (data.hasOwnProperty("serial")){
