@@ -222,7 +222,7 @@ gamepad.axisToCSS = function(x,y, style) {
 
 gamepad.joypadLoop = function() {
   if (gamepad.isEnabled) {
-    axisValues = false;
+    let axisValues = false;
     let i;
     for (i = 0; i < 10; i++) {
       if (typeof joypad.instances[i] !== "undefined") { 
@@ -233,16 +233,34 @@ gamepad.joypadLoop = function() {
     if (axisValues !== false){
       /* -- Stick 1 -- */
       if (config.gamepadAxis12FeedbackStyle === 'Circle') {
-        document.getElementById("joystickFeedback1").style.left = gamepad.axisToCSS(axisValues[0], axisValues[1], 'Circle')[0] + "%";
-        document.getElementById("joystickFeedback1").style.top = gamepad.axisToCSS(axisValues[0], axisValues[1], 'Circle')[1] + "%";
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[0],
+          axisValues[1],
+          'Circle'
+        );
+        const element = document.getElementById("joystickFeedback1");
+        element.style.left = tmpAxisToCSSValue[0] + "%";
+        element.style.top = tmpAxisToCSSValue[1] + "%";
       }
       if (config.gamepadAxis12FeedbackStyle === 'Square') {
-        document.getElementById("joystickFeedback1").style.left = gamepad.axisToCSS(axisValues[0], axisValues[1], 'Square')[0] + "%";
-        document.getElementById("joystickFeedback1").style.top = gamepad.axisToCSS(axisValues[0], axisValues[1], 'Square')[1] + "%";
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[0],
+          axisValues[1],
+          'Square'
+        );
+        const element = document.getElementById("joystickFeedback1");
+        element.style.left = tmpAxisToCSSValue[0] + "%";
+        element.style.top = tmpAxisToCSSValue[1] + "%";
       }
       if (config.gamepadAxis12FeedbackStyle === 'PowerStick') {
-        document.getElementById("joystickFeedback1").style.left = gamepad.axisToCSS(axisValues[0], axisValues[1], 'PowerStick')[0] + "%";
-        document.getElementById("joystickFeedback1").style.top = gamepad.axisToCSS(axisValues[0], axisValues[1], 'PowerStick')[1] + "%";
+        const tmpAxisToCSSValue = gamepad.axisToCSS(
+          axisValues[0],
+          axisValues[1],
+          'PowerStick'
+        );
+        const element = document.getElementById("joystickFeedback1");
+        element.style.left = tmpAxisToCSSValue[0] + "%";
+        element.style.top = tmpAxisToCSSValue[1] + "%";
       }      
       /* -- Stick 2 -- */
       if (config.gamepadAxis34FeedbackStyle === 'Circle') {
@@ -573,23 +591,20 @@ control.loop = function () {
     let i;
     for (i = 0; i < 10; i++) {
       if (typeof joypad.instances[i] !== "undefined") { 
-        axisValues = joypad.instances[i].axes; 
-        panel1Vertical = tools.cicleCoordsToScuareCoords(
+        axisValues = joypad.instances[i].axes;
+        const axis01ScuareCoords = tools.cicleCoordsToScuareCoords(
           axisValues[0],
           axisValues[1]
-        )[1];
-        panel1Horizontal = tools.cicleCoordsToScuareCoords(
-          axisValues[0],
-          axisValues[1]
-        )[0];
-        panel3Vertical = tools.cicleCoordsToScuareCoords(
+        );
+        panel1Vertical = axis01ScuareCoords[1];
+        panel1Horizontal = axis01ScuareCoords[0];
+
+        const axis23ScuareCoords = tools.cicleCoordsToScuareCoords(
           axisValues[2],
           axisValues[3]
-        )[1];
-        panel3Horizontal = tools.cicleCoordsToScuareCoords(
-          axisValues[2],
-          axisValues[3]
-        )[0];
+        );
+        panel3Vertical = axis23ScuareCoords[1];
+        panel3Horizontal = axis23ScuareCoords[0];
         break;
       };
     }
