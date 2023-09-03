@@ -191,36 +191,38 @@ joypad.on('button_press', e => {
 
 gamepad.axisToCSS = function(x,y, style) {
   if (style === 'Circle') {
-    x = ((x * 100)/2)+50
-    y = ((y * 100)/2)+50
+    x = ((x * 100)/2)+50;
+    y = ((y * 100)/2)+50;
     return [x, y];
   }
   if (style === 'Square') {  
     // Transform to scuare
-    let u = tools.cicleCoordsToScuareCoords(x, y)[0]
-    let v = tools.cicleCoordsToScuareCoords(x, y)[1]
+    let u = tools.cicleCoordsToScuareCoords(x, y)[0];
+    let v = tools.cicleCoordsToScuareCoords(x, y)[1];
     
     // Transform to CSS
-    u = ((u * 100)/2)+50
-    v = ((v * 100)/2)+50
+    u = ((u * 100)/2)+50;
+    v = ((v * 100)/2)+50;
     return [u, v];
   }
   if (style === 'PowerStick') {
     // Transform to scuare
-    let u = tools.cicleCoordsToScuareCoords(x, y)[0]
-    let v = tools.cicleCoordsToScuareCoords(x, y)[1]
+    let u = tools.cicleCoordsToScuareCoords(x, y)[0];
+    let v = tools.cicleCoordsToScuareCoords(x, y)[1];
     
     // Transform to CSS
-    u = ((u * 100)/2)+50
-    v = ((v * 100))+100
-    if ( v > 100){ v = 100 }
+    u = ((u * 100)/2)+50;
+    v = ((v * 100))+100;
+    if ( v > 100){
+      v = 100;
+    }
     return [u, v];
   }
 }; 
 
 gamepad.joypadLoop = function() {
   if (gamepad.isEnabled) {
-    axisValues = false
+    axisValues = false;
     let i;
     for (i = 0; i < 10; i++) {
       if (typeof joypad.instances[i] !== "undefined") { 
@@ -279,7 +281,7 @@ ui.buttonAnimation = function(id) {
 }; 
 
 /* UI Lock */
-ui.areBtnsLocked = false
+ui.areBtnsLocked = false;
 
 ui.unlockBtns = function() {
   ui.areBtnsLocked = true;
@@ -291,21 +293,21 @@ ui.lockBtns = function() {
 
 document.getElementById("btnLockMenu").addEventListener("click", function() {
   if (ui.areBtnsLocked  == false) {
-    console.log("Buttons Loked")
-    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnActiveColor
+    console.log("Buttons Loked");
+    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnActiveColor;
     ui.unlockBtns();
   } else {
-    console.log("Buttons Unlocked")
-    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnInactiveColor
+    console.log("Buttons Unlocked");
+    document.getElementById("btnLockMenu").style.backgroundColor = ui.btnInactiveColor;
     ui.lockBtns();
   }
 });
 
 /* UI Lock  */
-ui.fullscreen = false
+ui.fullscreen = false;
 
 ui.openFullscreen = function() {
-  var elem = document.documentElement;
+  let elem = document.documentElement;
   ui.fullscreen = true
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
@@ -319,8 +321,8 @@ ui.openFullscreen = function() {
 }
 
 ui.closeFullscreen = function() {
-  var elem = document.documentElement;
-  ui.fullscreen = false
+  // let elem = document.documentElement;
+  ui.fullscreen = false;
   if (document.exitFullscreen) {
     document.exitFullscreen();
   } else if (document.mozCancelFullScreen) { /* Firefox */
@@ -348,44 +350,44 @@ document.getElementById("btnFullScreen").addEventListener("click", function() {
 
 document.getElementById("trimCol1TopLeft").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.minusControl1TopVal()
+    trim.minusControl1TopVal();
   }
 });
 document.getElementById("trimCol1TopRight").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.plusControl1TopVal()
+    trim.plusControl1TopVal();
   }
 });
 document.getElementById("trimCol1BottomLeft").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.minusControl1BottomVal()
+    trim.minusControl1BottomVal();
   }
 });
 document.getElementById("trimCol1BottomRight").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.plusControl1BottomVal()
+    trim.plusControl1BottomVal();
   }
 });
 
 
 document.getElementById("trimCol3TopLeft").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.minusControl3TopVal()
+    trim.minusControl3TopVal();
   }
 });
 document.getElementById("trimCol3TopRight").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.plusControl3TopVal()
+    trim.plusControl3TopVal();
   }
 });
 document.getElementById("trimCol3BottomLeft").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.minusControl3BottomVal()
+    trim.minusControl3BottomVal();
   }
 });
 document.getElementById("trimCol3BottomRight").addEventListener("click", function() {
   if (ui.areBtnsLocked == false) {
-    trim.plusControl3BottomVal()
+    trim.plusControl3BottomVal();
   }
 });
 
@@ -396,11 +398,11 @@ document.getElementById("trimCol3BottomRight").addEventListener("click", functio
 
 if (typeof trim == "undefined") { trim = function() {} }
 
-trim.control1TopVal = 0
-trim.control1BottomVal = 0
-trim.control3TopVal = 0
-trim.control3BottomVal = 0
-trim.step = 1
+trim.control1TopVal = 0;
+trim.control1BottomVal = 0;
+trim.control3TopVal = 0;
+trim.control3BottomVal = 0;
+trim.step = 1;
 
 trim.loadFromLocalStorage = function() {
   if (localStorage.getItem('control1TopVal') !== null) {
@@ -422,7 +424,7 @@ trim.loadFromLocalStorage = function() {
 } 
 
 trim.plusControl1TopVal = function(val) {
-  console.log("Panel 1 - Trim Top +")
+  console.log("Panel 1 - Trim Top +");
   ui.buttonAnimation("trimCol1TopRight");
 
   trim.control1TopVal = trim.control1TopVal + trim.step;
@@ -430,7 +432,7 @@ trim.plusControl1TopVal = function(val) {
   document.getElementById("trimCol1TopLabel").innerHTML = trim.control1TopVal;
 }
 trim.minusControl1TopVal = function(val) {
-  console.log("Panel 1 - Trim Top -")
+  console.log("Panel 1 - Trim Top -");
   ui.buttonAnimation("trimCol1TopLeft");
   
   trim.control1TopVal = trim.control1TopVal - trim.step;
@@ -439,7 +441,7 @@ trim.minusControl1TopVal = function(val) {
 }
 
 trim.plusControl1BottomVal = function(val) {
-  console.log("Panel 1 - Trim Bottom +")
+  console.log("Panel 1 - Trim Bottom +");
   ui.buttonAnimation("trimCol1BottomRight");
 
   trim.control1BottomVal = trim.control1BottomVal + trim.step;
@@ -447,7 +449,7 @@ trim.plusControl1BottomVal = function(val) {
   document.getElementById("trimCol1BottomLabel").innerHTML = trim.control1BottomVal;
 }
 trim.minusControl1BottomVal = function(val) {
-  console.log("Panel 1 - Trim Bottom -")
+  console.log("Panel 1 - Trim Bottom -");
   ui.buttonAnimation("trimCol1BottomLeft"); 
 
   trim.control1BottomVal = trim.control1BottomVal - trim.step;
@@ -456,7 +458,7 @@ trim.minusControl1BottomVal = function(val) {
 }
 
 trim.plusControl3TopVal = function(val) {
-  console.log("Panel 3 - Trim Top +")
+  console.log("Panel 3 - Trim Top +");
   ui.buttonAnimation("trimCol3TopRight");
 
   trim.control3TopVal = trim.control3TopVal + trim.step;
@@ -464,7 +466,7 @@ trim.plusControl3TopVal = function(val) {
   document.getElementById("trimCol3TopLabel").innerHTML = trim.control3TopVal;
 }
 trim.minusControl3TopVal = function(val) {
-  console.log("Panel 3 - Trim Top -")
+  console.log("Panel 3 - Trim Top -");
   ui.buttonAnimation("trimCol3TopLeft");
 
   trim.control3TopVal = trim.control3TopVal - trim.step;
@@ -473,7 +475,7 @@ trim.minusControl3TopVal = function(val) {
 }
 
 trim.plusControl3BottomVal = function(val) {
-  console.log("Panel 3 - Trim Bottom +")
+  console.log("Panel 3 - Trim Bottom +");
   ui.buttonAnimation("trimCol3BottomRight");
 
   trim.control3BottomVal = trim.control3BottomVal + trim.step;
@@ -481,7 +483,7 @@ trim.plusControl3BottomVal = function(val) {
   document.getElementById("trimCol3BottomLabel").innerHTML = trim.control3BottomVal;
 }
 trim.minusControl3BottomVal = function(val) {
-  console.log("Panel 3 - Trim Bottom -")
+  console.log("Panel 3 - Trim Bottom -");
   ui.buttonAnimation("trimCol3BottomLeft");
 
   trim.control3BottomVal = trim.control3BottomVal - trim.step;
@@ -495,13 +497,13 @@ trim.minusControl3BottomVal = function(val) {
 
 var websocket = new WebSocket(config.websocketUrl, ['arduino']);
 
-websocket.latencyTestLoopEvery = 500      //Miliseconds
+websocket.latencyTestLoopEvery = 500; //Miliseconds
 websocket.latencyTestLoopEnabled = false;
 
 
 websocket.onopen = function () {
     console.log("WebSocket Connected");
-    websocket.latencyTestLoopEnabled = true
+    websocket.latencyTestLoopEnabled = true;
 };
 websocket.onerror = function (error) {
     console.log('WebSocket Error ', error);
@@ -535,7 +537,7 @@ websocket.onmessage = function (e) {
 };
 websocket.onclose = function () {
     console.log('WebSocket connection closed');
-    websocket.latencyTestLoopEnabled = false
+    websocket.latencyTestLoopEnabled = false;
 };
 
 websocket.latencyTestLoop  = function () {
