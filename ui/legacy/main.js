@@ -1,6 +1,6 @@
-/* ------------------------------------------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
 // On document ready
-/* ------------------------------------------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", function() {
   trim.loadFromLocalStorage();
@@ -9,25 +9,29 @@ document.addEventListener("DOMContentLoaded", function() {
 /* ------------------------------------------------------------------------------------------ */
 // Config
 /* ------------------------------------------------------------------------------------------ */
-if (typeof config == "undefined") { config = function() {} }
+if (typeof config == "undefined") {
+  config = function() {}
+}
 
 
 /* ------------------------------------------------------------------------------------------ */
 // Tools
 /* ------------------------------------------------------------------------------------------ */
-if (typeof tools == "undefined") { tools = function() {} }
+if (typeof tools == "undefined") {
+  tools = function() {}
+}
 
 tools.cicleCoordsToScuareCoords = function(x, y) {
   // Transform to scuare
-  u2 = x * x;
-  v2 = y * y;
-  twosqrt2 = 2.0 * Math.sqrt(2.0);
-  subtermx = 2.0 + u2 - v2;
-  subtermy = 2.0 - u2 + v2;
-  termx1 = subtermx + x * twosqrt2;
-  termx2 = subtermx - x * twosqrt2;
-  termy1 = subtermy + y * twosqrt2;
-  termy2 = subtermy - y * twosqrt2;
+  let u2 = x * x;
+  let v2 = y * y;
+  let twosqrt2 = 2.0 * Math.sqrt(2.0);
+  let subtermx = 2.0 + u2 - v2;
+  let subtermy = 2.0 - u2 + v2;
+  let termx1 = subtermx + x * twosqrt2;
+  let termx2 = subtermx - x * twosqrt2;
+  let termy1 = subtermy + y * twosqrt2;
+  let termy2 = subtermy - y * twosqrt2;
   if ( termx1 < 0) { termx1 = 0}
   if ( termx2 < 0) { termx2 = 0}
   if ( termy1 < 0) { termy1 = 0}
@@ -45,7 +49,9 @@ tools.cicleCoordsToScuareCoords = function(x, y) {
 /* ------------------------------------------------------------------------------------------ */
 // Touch Controls
 /* ------------------------------------------------------------------------------------------ */
-if (typeof touch == "undefined") { touch = function() {} }
+if (typeof touch == "undefined") {
+  touch = function() {}
+}
 
 touch.control1 = nipplejs.create({
     mode: 'dynamic',
@@ -84,7 +90,9 @@ touch.control2.on('added', function (evt, nipple) {
 /* ------------------------------------------------------------------------------------------ */
 // Gamepad
 /* ------------------------------------------------------------------------------------------ */
-if (typeof gamepad == "undefined") { gamepad = function() {} }
+if (typeof gamepad == "undefined") {
+  gamepad = function() {}
+}
 
 gamepad.buttonFadeTime = 200
 gamepad.isEnabled = false
@@ -189,8 +197,8 @@ gamepad.axisToCSS = function(x,y, style) {
   }
   if (style === 'Square') {  
     // Transform to scuare
-    u = tools.cicleCoordsToScuareCoords(x, y)[0] 
-    v = tools.cicleCoordsToScuareCoords(x, y)[1]
+    let u = tools.cicleCoordsToScuareCoords(x, y)[0]
+    let v = tools.cicleCoordsToScuareCoords(x, y)[1]
     
     // Transform to CSS
     u = ((u * 100)/2)+50
@@ -199,8 +207,8 @@ gamepad.axisToCSS = function(x,y, style) {
   }
   if (style === 'PowerStick') {
     // Transform to scuare
-    u = tools.cicleCoordsToScuareCoords(x, y)[0] 
-    v = tools.cicleCoordsToScuareCoords(x, y)[1]
+    let u = tools.cicleCoordsToScuareCoords(x, y)[0]
+    let v = tools.cicleCoordsToScuareCoords(x, y)[1]
     
     // Transform to CSS
     u = ((u * 100)/2)+50
@@ -213,7 +221,7 @@ gamepad.axisToCSS = function(x,y, style) {
 gamepad.joypadLoop = function() {
   if (gamepad.isEnabled) {
     axisValues = false
-    var i;
+    let i;
     for (i = 0; i < 10; i++) {
       if (typeof joypad.instances[i] !== "undefined") { 
         axisValues = joypad.instances[i].axes; 
@@ -255,7 +263,9 @@ setInterval(gamepad.joypadLoop, 33);
 /* ------------------------------------------------------------------------------------------ */
 // UI
 /* ------------------------------------------------------------------------------------------ */
-if (typeof ui == "undefined") { ui = function() {} }
+if (typeof ui == "undefined") {
+  ui = function() {}
+}
 
 ui.btnActiveColor = 'blue'
 ui.btnInactiveColor = "rgb(41, 41, 61)";
@@ -497,6 +507,7 @@ websocket.onerror = function (error) {
     console.log('WebSocket Error ', error);
 };
 websocket.onmessage = function (e) {
+    let data;
     try {
       data = JSON.parse(e.data);
     } catch (error) {
@@ -516,9 +527,9 @@ websocket.onmessage = function (e) {
     }
 
     if (data.hasOwnProperty("serial")){
-      currentTime = Date.now().toString();
-      responceTime = data['serial'];
-      latency = Math.round((currentTime - responceTime));
+      let currentTime = Date.now().toString();
+      let responceTime = data['serial'];
+      let latency = Math.round((currentTime - responceTime));
       document.getElementById("panelLatency").innerHTML = latency;
     }
 };
@@ -529,7 +540,7 @@ websocket.onclose = function () {
 
 websocket.latencyTestLoop  = function () {
   if (websocket.latencyTestLoopEnabled) {
-    currentTime = Date.now().toString();
+    let currentTime = Date.now().toString();
     websocket.send(JSON.stringify({"serial": currentTime}))
   }
 }
@@ -540,29 +551,43 @@ setInterval(websocket.latencyTestLoop, websocket.latencyTestLoopEvery)
 // Control
 /* ------------------------------------------------------------------------------------------ */
 
-if (typeof control == "undefined") { control = function() {} }
+if (typeof control == "undefined") {
+  control = function() {}
+}
 
 control.loopEvery = 100;
 
 control.loop = function () {
-  msgToController = {}
-  panel1Vertical = 0
-  panel1Horizontal = 0
-  panel3Vertical = 0
-  panel3Horizontal = 0
+  let msgToController = {};
+  let panel1Vertical = 0;
+  let panel1Horizontal = 0;
+  let panel3Vertical = 0;
+  let panel3Horizontal = 0;
 
   // GET AXIS COORDS
   if (gamepad.isEnabled) {
     // GAMEPAD
-    axisValues = false
-    var i;
+    let axisValues = false
+    let i;
     for (i = 0; i < 10; i++) {
       if (typeof joypad.instances[i] !== "undefined") { 
         axisValues = joypad.instances[i].axes; 
-        panel1Vertical = tools.cicleCoordsToScuareCoords(axisValues[0], axisValues[1])[1] 
-        panel1Horizontal = tools.cicleCoordsToScuareCoords(axisValues[0], axisValues[1])[0]
-        panel3Vertical = tools.cicleCoordsToScuareCoords(axisValues[2], axisValues[3])[1] 
-        panel3Horizontal = tools.cicleCoordsToScuareCoords(axisValues[2], axisValues[3])[0]
+        panel1Vertical = tools.cicleCoordsToScuareCoords(
+          axisValues[0],
+          axisValues[1]
+        )[1];
+        panel1Horizontal = tools.cicleCoordsToScuareCoords(
+          axisValues[0],
+          axisValues[1]
+        )[0];
+        panel3Vertical = tools.cicleCoordsToScuareCoords(
+          axisValues[2],
+          axisValues[3]
+        )[1];
+        panel3Horizontal = tools.cicleCoordsToScuareCoords(
+          axisValues[2],
+          axisValues[3]
+        )[0];
         break;
       };
     }
@@ -570,15 +595,19 @@ control.loop = function () {
     // TOUCH!
 
     if (touch.control1.get(touch.control1.nippleid).frontPosition !== undefined) {
-      y = (touch.control1.get(touch.control1.nippleid).frontPosition['y'] * 100)/touch.control1.options.size;
-      x = (touch.control1.get(touch.control1.nippleid).frontPosition['x'] * 100)/touch.control1.options.size;
+      let tmpControl1Get = touch.control1.get(touch.control1.nippleid);
+      let tmpSize = touch.control1.options.size;
+      let y = (tmpControl1Get.frontPosition['y'] * 100) / tmpSize;
+      let x = (tmpControl1Get.frontPosition['x'] * 100) / tmpSize;
 
       panel1Vertical = tools.cicleCoordsToScuareCoords((x/50), (y/50))[1];
       panel1Horizontal = tools.cicleCoordsToScuareCoords((x/50), (y/50))[0];
     }
     if (touch.control2.get(touch.control2.nippleid).frontPosition !== undefined) {
-      y = (touch.control2.get(touch.control2.nippleid).frontPosition['y'] * 100)/touch.control2.options.size;
-      x = (touch.control2.get(touch.control2.nippleid).frontPosition['x'] * 100)/touch.control2.options.size;
+      let tmpControl2Get = touch.control2.get(touch.control2.nippleid);
+      let tmpSize = touch.control2.options.size;
+      let y = (tmpControl2Get.frontPosition['y'] * 100)/tmpSize;
+      let x = (tmpControl2Get.frontPosition['x'] * 100)/tmpSize;
 
       panel3Vertical = tools.cicleCoordsToScuareCoords((x/50), (y/50))[1];
       panel3Horizontal = tools.cicleCoordsToScuareCoords((x/50), (y/50))[0];
@@ -590,8 +619,8 @@ control.loop = function () {
   //config.panel1type = 'DifferentialThrust';   // PitchYaw - Thrust - ThrustRoll - DifferentialThrust 
   if (config.panel1type == 'PitchYaw'){
     // Control (1 to -1) to servo (100% - 0%)
-    pitchServoValue = Math.round(((panel1Vertical + 1)/2)*100);
-    yawServoValue = Math.round(((panel1Horizontal + 1)/2)*100);
+    let pitchServoValue = Math.round(((panel1Vertical + 1)/2)*100);
+    let yawServoValue = Math.round(((panel1Horizontal + 1)/2)*100);
     // Trim ajustment
     pitchServoValue = pitchServoValue + trim.control1BottomVal;
     yawServoValue = yawServoValue + trim.control1TopVal;
@@ -600,23 +629,38 @@ control.loop = function () {
     msgToController['servo' + config.yawServoNumber] = yawServoValue;
   }
   if (config.panel1type == 'Thrust'){
-    msgToController = {...msgToController, ...control.thrustControlToMsgToController(panel1Vertical) };
+    msgToController = {
+      ...msgToController,
+      ...control.thrustControlToMsgToController(panel1Vertical),
+    };
   }
   if (config.panel1type == 'ThrustRoll'){
-    msgToController = {...msgToController, ...control.thrustControlToMsgToController(panel1Vertical) };
+    msgToController = {
+      ...msgToController,
+      ...control.thrustControlToMsgToController(panel1Vertical),
+    };
     //Roll
-    rollServoValue = Math.round(((panel1Horizontal + 1)/2)*100);        // Control (1 to -1) to servo (100% - 0%)
-    rollServoValue = rollServoValue + trim.control1TopVal;              // Trim ajustment
-    msgToController['servo' + config.rollServoNumber] = rollServoValue; // Set msg to Controller
+    // Control (1 to -1) to servo (100% - 0%)
+    let rollServoValue = Math.round(((panel1Horizontal + 1)/2)*100);
+    // Trim ajustment
+    rollServoValue = rollServoValue + trim.control1TopVal;
+    // Set msg to Controller
+    msgToController['servo' + config.rollServoNumber] = rollServoValue;
   }
   if (config.panel1type == 'DifferentialThrust'){
-    msgToController = {...msgToController, ...control.differentialThrustControlToMsgToController(panel1Vertical, panel1Horizontal) };
+    msgToController = {
+      ...msgToController,
+      ...control.differentialThrustControlToMsgToController(
+        panel1Vertical,
+        panel1Horizontal
+      ),
+    };
   }
   // -----------------------------------------------------------------------------------------
   if (config.panel3type == 'PitchYaw'){
     // Control (1 to -1) to servo (100% - 0%)
-    pitchServoValue = Math.round(((panel3Vertical + 1)/2)*100);
-    yawServoValue = Math.round(((panel3Horizontal + 1)/2)*100);
+    let pitchServoValue = Math.round(((panel3Vertical + 1)/2)*100);
+    let yawServoValue = Math.round(((panel3Horizontal + 1)/2)*100);
     // Trim ajustment
     pitchServoValue = pitchServoValue + trim.control3BottomVal;
     yawServoValue = yawServoValue + trim.control3TopVal;
@@ -625,19 +669,35 @@ control.loop = function () {
     msgToController['servo' + config.yawServoNumber] = yawServoValue;
   }
   if (config.panel3type == 'Thrust'){
-    msgToController = {...msgToController, ...control.thrustControlToMsgToController(panel3Vertical) };
+    msgToController = {
+      ...msgToController,
+      ...control.thrustControlToMsgToController(panel3Vertical),
+    };
   }
   if (config.panel3type == 'ThrustRoll'){
-    msgToController = {...msgToController, ...control.thrustControlToMsgToController(panel3Vertical) };
+    msgToController = {
+      ...msgToController,
+      ...control.thrustControlToMsgToController(panel3Vertical),
+    };
     //Roll
-    rollServoValue = Math.round(((panel3Horizontal + 1)/2)*100);        // Control (1 to -1) to servo (100% - 0%)
-    rollServoValue = rollServoValue + trim.control3TopVal;              // Trim ajustment
-    msgToController['servo' + config.rollServoNumber] = rollServoValue; // Set msg to Controller
+    // Control (1 to -1) to servo (100% - 0%)
+    let rollServoValue = Math.round(((panel3Horizontal + 1)/2)*100);
+    // Trim ajustment
+    rollServoValue = rollServoValue + trim.control3TopVal;
+    // Set msg to Controller
+    msgToController['servo' + config.rollServoNumber] = rollServoValue;
   }
   if (config.panel3type == 'DifferentialThrust'){
-    msgToController = {...msgToController, ...control.differentialThrustControlToMsgToController(panel3Vertical, panel3Horizontal) };
+    msgToController = {
+      ...msgToController,
+      ...control.differentialThrustControlToMsgToController(
+        panel3Vertical,
+        panel3Horizontal
+      ),
+    };
   }
 
+  // move to server config ?
   msgToController['motor1orientation'] = config.motor1orientation;
   msgToController['motor2orientation'] = config.motor2orientation;
   
@@ -653,20 +713,28 @@ control.loop = function () {
 }
 
 control.differentialThrustControlToMsgToController = function (panelVerticalValue, panelHorizontalValue) {
-  thrust = Math.round(((panelVerticalValue + 1))*100);
-  if (thrust > 100){ thrust = 100 };
+  let msgToController = {};
+  let thrust = Math.round(((panelVerticalValue + 1))*100);
+  if (thrust > 100){
+    thrust = 100
+  }
   thrust = Math.abs(thrust - 100);
 
-  horizontal = Math.round(panelHorizontalValue*100);        // Control (1 to -1) to servo (100% - 0%)
+  // Control (1 to -1) to servo (100% - 0%)
+  let horizontal = Math.round(panelHorizontalValue*100);
 
   if (thrust > 0 ) {
     if ( horizontal >= 0 ) {
       horizontal = Math.abs(Math.abs(horizontal) - 100);
       msgToController['motor' + config.motorRigth] = thrust;
-      msgToController['motor' + config.motorLeft] = Math.round(horizontal * thrust / 100);
+      msgToController['motor' + config.motorLeft] = Math.round(
+        horizontal * thrust / 100
+      );
     } else {
       horizontal = Math.abs(Math.abs(horizontal) - 100);
-      msgToController['motor' + config.motorRigth] = Math.round(horizontal * thrust / 100);
+      msgToController['motor' + config.motorRigth] = Math.round(
+        horizontal * thrust / 100)
+      ;
       msgToController['motor' + config.motorLeft] = thrust;
     }
   } else {
@@ -677,21 +745,21 @@ control.differentialThrustControlToMsgToController = function (panelVerticalValu
 }
 
 control.thrustControlToMsgToController = function (panelVerticalValue) {
-  msgToController = {}
+  let msgToController = {};
   if (config.motorQuantity == 1){
     // Thrust - 1 Motor
-    thrustServoValue = Math.round(((panelVerticalValue + 1))*100);
+    let thrustServoValue = Math.round(((panelVerticalValue + 1))*100);
     if (thrustServoValue > 100){ thrustServoValue = 100 };
     thrustServoValue = Math.abs(thrustServoValue - 100);
     msgToController['motor1'] = thrustServoValue;
   } else {
     // Thrust - 2 Motor
-    thrustServoValue = Math.round(((panelVerticalValue + 1))*100);
+    let thrustServoValue = Math.round(((panelVerticalValue + 1))*100);
     if (thrustServoValue > 100){ thrustServoValue = 100 };
     thrustServoValue = Math.abs(thrustServoValue - 100);
 
-    motor1ServoValue = thrustServoValue + trim.control1TopVal;
-    motor2ServoValue = thrustServoValue + trim.control1BottomVal;
+    let motor1ServoValue = thrustServoValue + trim.control1TopVal;
+    let motor2ServoValue = thrustServoValue + trim.control1BottomVal;
 
     if (motor1ServoValue > 100){ motor1ServoValue = 100 };
     if (motor2ServoValue > 100){ motor2ServoValue = 100 };
@@ -701,7 +769,7 @@ control.thrustControlToMsgToController = function (panelVerticalValue) {
   return msgToController;
 }
 
-setInterval(control.loop, control.loopEvery)
+setInterval(control.loop, control.loopEvery);
 
 
 config.panel1type = 'DifferentialThrust';   // PitchYaw - Thrust - ThrustRoll - DifferentialThrust 
